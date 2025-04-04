@@ -1,10 +1,29 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const pathname = usePathname();
+
+  // Check login status for demo purposes
+  useEffect(() => {
+    setIsLoggedIn(localStorage.getItem('isLoggedIn') === 'true');
+  }, [pathname]);
+
+  // Handle login/logout for demo purposes
+  const handleAuth = () => {
+    if (isLoggedIn) {
+      localStorage.setItem('isLoggedIn', 'false');
+      setIsLoggedIn(false);
+    } else {
+      localStorage.setItem('isLoggedIn', 'true');
+      setIsLoggedIn(true);
+    }
+  };
 
   return (
     <nav className="bg-white shadow-sm sticky top-0 z-50">
@@ -19,24 +38,38 @@ export default function Navbar() {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
-            <Link href="/hire" className="text-gray-700 hover:text-purple-600 transition">
-              Hire Designers
+            <Link href="/list" className="text-gray-700 hover:text-purple-600 transition">
+              Browse Designers
             </Link>
-            <Link href="/work" className="text-gray-700 hover:text-purple-600 transition">
-              Find Work
-            </Link>
+            {isLoggedIn && (
+              <Link href="/work" className="text-gray-700 hover:text-purple-600 transition">
+                Find Work
+              </Link>
+            )}
             <Link href="/about" className="text-gray-700 hover:text-purple-600 transition">
               About
             </Link>
             <Link href="/contact" className="text-gray-700 hover:text-purple-600 transition">
               Contact
             </Link>
-            <Link href="/login" className="text-gray-700 hover:text-purple-600 transition">
-              Log In
-            </Link>
-            <Link href="/signup" className="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition">
-              Sign Up
-            </Link>
+            
+            {isLoggedIn ? (
+              <button 
+                onClick={handleAuth}
+                className="text-gray-700 hover:text-purple-600 transition"
+              >
+                Log Out
+              </button>
+            ) : (
+              <>
+                <Link href="/login" className="text-gray-700 hover:text-purple-600 transition">
+                  Log In
+                </Link>
+                <Link href="/signup" className="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition">
+                  Sign Up
+                </Link>
+              </>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -61,24 +94,38 @@ export default function Navbar() {
         {isMenuOpen && (
           <div className="md:hidden py-4 border-t">
             <div className="flex flex-col space-y-4">
-              <Link href="/hire" className="text-gray-700 hover:text-purple-600 transition">
-                Hire Designers
+              <Link href="/list" className="text-gray-700 hover:text-purple-600 transition">
+                Browse Designers
               </Link>
-              <Link href="/work" className="text-gray-700 hover:text-purple-600 transition">
-                Find Work
-              </Link>
+              {isLoggedIn && (
+                <Link href="/work" className="text-gray-700 hover:text-purple-600 transition">
+                  Find Work
+                </Link>
+              )}
               <Link href="/about" className="text-gray-700 hover:text-purple-600 transition">
                 About
               </Link>
               <Link href="/contact" className="text-gray-700 hover:text-purple-600 transition">
                 Contact
               </Link>
-              <Link href="/login" className="text-gray-700 hover:text-purple-600 transition">
-                Log In
-              </Link>
-              <Link href="/signup" className="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition text-center">
-                Sign Up
-              </Link>
+              
+              {isLoggedIn ? (
+                <button 
+                  onClick={handleAuth}
+                  className="text-gray-700 hover:text-purple-600 transition text-left"
+                >
+                  Log Out
+                </button>
+              ) : (
+                <>
+                  <Link href="/login" className="text-gray-700 hover:text-purple-600 transition">
+                    Log In
+                  </Link>
+                  <Link href="/signup" className="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition text-center">
+                    Sign Up
+                  </Link>
+                </>
+              )}
             </div>
           </div>
         )}
