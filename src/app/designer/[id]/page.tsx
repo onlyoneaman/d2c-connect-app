@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 // Placeholder data for a single designer
 const designerData = {
@@ -118,10 +119,12 @@ export default function DesignerProfile() {
       {/* Cover Image & Header */}
       <div className="relative">
         <div className="h-64 bg-gray-800">
-          <img 
+          <Image 
             src={designer.coverImage} 
             alt="Cover" 
             className="w-full h-full object-cover opacity-60"
+            width={1200}
+            height={400}
           />
         </div>
         
@@ -130,10 +133,12 @@ export default function DesignerProfile() {
             <div className="flex flex-col">
               <div className="flex items-center mb-4">
                 <div className="relative h-24 w-24 rounded-full overflow-hidden bg-gray-800 border-4 border-gray-900">
-                  <img 
+                  <Image 
                     src={designer.avatar} 
                     alt={`${designer.name} profile`} 
                     className="h-full w-full object-cover"
+                    width={96}
+                    height={96}
                   />
                   <div className="absolute bottom-0 right-0 h-3 w-3 bg-green-400 rounded-full border-2 border-gray-900"></div>
                 </div>
@@ -266,10 +271,12 @@ export default function DesignerProfile() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {designer.portfolio.map((item) => (
                 <div key={item.id} className="relative bg-gray-800 rounded-lg overflow-hidden group">
-                  <img 
+                  <Image 
                     src={item.image}
                     alt={item.title}
                     className="w-full aspect-[4/3] object-cover"
+                    width={600}
+                    height={400}
                   />
                   
                   {item.earnings && (

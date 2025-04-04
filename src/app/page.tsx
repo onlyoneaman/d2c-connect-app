@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import Image from 'next/image';
 
 export const metadata = {
   title: 'D2C Connect - Connect D2C Brands with Freelance Designers',

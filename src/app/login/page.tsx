@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 
@@ -16,7 +16,7 @@ interface FormErrors {
   form?: string;
 }
 
-export default function Login() {
+function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const redirectPath = searchParams.get('redirect') || '/list';
@@ -28,6 +28,12 @@ export default function Login() {
   });
   const [errors, setErrors] = useState<FormErrors>({});
   const [isLoading, setIsLoading] = useState(false);
+  const [isClient, setIsClient] = useState(false);
+
+  // Set isClient to true when component mounts (client-side only)
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
@@ -77,13 +83,15 @@ export default function Login() {
       await new Promise(resolve => setTimeout(resolve, 1500));
       
       // Set login state in localStorage for demo purposes
-      localStorage.setItem('isLoggedIn', 'true');
-      localStorage.setItem('userEmail', formData.email);
+      if (isClient) {
+        localStorage.setItem('isLoggedIn', 'true');
+        localStorage.setItem('userEmail', formData.email);
+      }
       
       // Redirect to list page or the page they were trying to access
       router.push(redirectPath);
       
-    } catch (_error) {
+    } catch {
       setErrors({
         form: 'Login failed. Please check your credentials and try again.'
       });
@@ -101,13 +109,15 @@ export default function Login() {
       await new Promise(resolve => setTimeout(resolve, 1000));
       
       // Set login state in localStorage for demo purposes
-      localStorage.setItem('isLoggedIn', 'true');
-      localStorage.setItem('userProvider', provider);
+      if (isClient) {
+        localStorage.setItem('isLoggedIn', 'true');
+        localStorage.setItem('userProvider', provider);
+      }
       
       // Redirect to list page after login
       router.push(redirectPath);
       
-    } catch (_error) {
+    } catch {
       setErrors({
         form: `${provider} login failed. Please try again.`
       });
@@ -261,5 +271,21 @@ export default function Login() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function Login() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center bg-gray-900 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="text-center text-white">
+        <svg className="animate-spin h-10 w-10 mx-auto mb-4 text-indigo-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+        <p className="text-lg">Loading...</p>
+      </div>
+    </div>}>
+      <LoginForm />
+    </Suspense>
   );
 } 

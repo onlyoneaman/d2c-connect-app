@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 
 // Placeholder data for designers
 const designers = [
@@ -143,7 +144,7 @@ export default function DesignerList() {
     const checkAuth = setTimeout(() => {
       // For demo purposes, we're setting this to true
       // In a real app, you would check if the user is logged in from your auth provider
-      const userLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+      const userLoggedIn = typeof window !== 'undefined' && localStorage.getItem('isLoggedIn') === 'true';
       setIsAuthenticated(userLoggedIn);
       setIsLoading(false);
       
@@ -311,10 +312,12 @@ export default function DesignerList() {
                 {/* Designer Card Header */}
                 <div className="relative overflow-hidden h-40">
                   <div className="absolute inset-0 bg-gradient-to-br from-indigo-900/80 to-gray-900/90 z-10"></div>
-                  <img 
+                  <Image 
                     src={designer.portfolio[0].image} 
                     alt={designer.portfolio[0].title}
                     className="w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform duration-300"
+                    width={600}
+                    height={400}
                   />
                   <div className="absolute top-3 left-3 z-20">
                     <div className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-900/80 text-gray-300">
@@ -332,10 +335,12 @@ export default function DesignerList() {
                 {/* Designer Info */}
                 <div className="p-5">
                   <div className="flex items-start mb-4">
-                    <img 
+                    <Image 
                       src={designer.avatar} 
                       alt={designer.name}
                       className="w-12 h-12 rounded-full border-2 border-gray-700 -mt-10 z-20 shadow-lg"
+                      width={48}
+                      height={48}
                     />
                     <div className="ml-2">
                       <h3 className="text-xl font-bold text-white group-hover:text-indigo-400 transition-colors">{designer.name}</h3>

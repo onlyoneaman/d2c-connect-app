@@ -7,21 +7,31 @@ import { usePathname } from 'next/navigation';
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isClient, setIsClient] = useState(false);
   const pathname = usePathname();
+
+  // Set isClient to true when component mounts (client-side only)
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   // Check login status for demo purposes
   useEffect(() => {
-    setIsLoggedIn(localStorage.getItem('isLoggedIn') === 'true');
-  }, [pathname]);
+    if (isClient) {
+      setIsLoggedIn(localStorage.getItem('isLoggedIn') === 'true');
+    }
+  }, [pathname, isClient]);
 
   // Handle login/logout for demo purposes
   const handleAuth = () => {
-    if (isLoggedIn) {
-      localStorage.setItem('isLoggedIn', 'false');
-      setIsLoggedIn(false);
-    } else {
-      localStorage.setItem('isLoggedIn', 'true');
-      setIsLoggedIn(true);
+    if (isClient) {
+      if (isLoggedIn) {
+        localStorage.setItem('isLoggedIn', 'false');
+        setIsLoggedIn(false);
+      } else {
+        localStorage.setItem('isLoggedIn', 'true');
+        setIsLoggedIn(true);
+      }
     }
   };
 
