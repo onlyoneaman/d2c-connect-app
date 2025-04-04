@@ -1,7 +1,28 @@
 {
 	"name": "d2c-connect",
-	"version": "0.0.1",
+	"version": "1.0.0",
+	"description": "A platform connecting D2C brands with top freelance designers",
 	"private": true,
+	"author": {
+		"name": "Aman Sinha",
+		"email": "contact@amansinha.dev",
+		"url": "https://2000-aman-sinha.workers.dev/"
+	},
+	"homepage": "https://d2c-connect-app.2000-aman-sinha.workers.dev/",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/username/d2c-connect"
+	},
+	"keywords": [
+		"d2c",
+		"designers",
+		"freelance",
+		"marketplace",
+		"next.js",
+		"react",
+		"tailwindcss",
+		"typescript"
+	],
 	"scripts": {
 		"dev": "next dev --turbopack",
 		"build": "next build",
@@ -38,5 +59,21 @@
 	},
 	"overrides": {
 		"picomatch": "^4.0.2"
-	}
+	},
+	"engines": {
+		"node": ">=18.0.0"
+	},
+	"browserslist": {
+		"production": [
+			">0.2%",
+			"not dead",
+			"not op_mini all"
+		],
+		"development": [
+			"last 1 chrome version",
+			"last 1 firefox version",
+			"last 1 safari version"
+		]
+	},
+	"license": "MIT"
 }

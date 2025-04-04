@@ -1,0 +1,100 @@
+# D2C Connect Cursor Rules
+# This file defines coding standards and best practices for the D2C Connect project.
+
+# General Rules
+[*]
+indent_style = space
+indent_size = 2
+end_of_line = lf
+charset = utf-8
+trim_trailing_whitespace = true
+insert_final_newline = true
+max_line_length = 100
+
+# TypeScript Rules
+[*.{ts,tsx}]
+# Naming Conventions
+component = PascalCase
+props_interface = PascalCase
+function = camelCase
+variable = camelCase
+constant = UPPER_CASE
+interface = PascalCase
+type = PascalCase
+enum = PascalCase
+
+# Component Structure
+component_order = imports, types, component, styles
+imports_order = react, next, third-party, local
+
+# Import Rules
+sort_imports = true
+group_imports = true
+no_duplicate_imports = true
+
+# Code Quality
+no_unused_vars = true
+no_console = warning
+no_debugger = error
+prefer_const = true
+no_var = true
+use_let_for_block_scoped_vars = true
+
+# React Rules
+react_hooks_exhaustive_deps = true
+jsx_boolean_value = never
+jsx_closing_bracket_location = line-aligned
+jsx_self_closing = true
+jsx_props_no_spreading = warning
+jsx_max_props_per_line = 1
+react_component_max_lines = 500
+
+# TypeScript Rules
+ts_no_any = warning
+ts_strict_null_checks = true
+ts_prefer_interface = true
+ts_explicit_return_type = true
+
+# Documentation
+require_jsdoc_for_complex_functions = true
+jsdoc_format = true
+
+# Testing
+test_file_suffix = .test.ts, .test.tsx, .spec.ts, .spec.tsx
+
+# CSS/Tailwind Rules
+[*.css]
+tailwind_class_order = layout, positioning, display, spacing, sizing, typography, visual, interactive, animation
+
+# Component File Organization
+# Components should follow this structure:
+# 1. Imports
+# 2. Type definitions (interfaces, types)
+# 3. Constants
+# 4. Utility functions
+# 5. Component definition
+# 6. Export statement
+
+# Project-Specific Rules
+component_directory_structure = feature-based
+state_management = react-hooks
+api_handling = async/await
+error_handling = try/catch
+accessibility = required
+responsive_design = mobile-first
+performance_optimization = required
+code_splitting = route-based
+
+# Security Rules
+no_inline_scripts = true
+no_eval = error
+no_unsafe_innerhtml = error
+csrf_protection = required
+
+# Git Rules
+commit_message_format = conventional
+branch_naming = feature/, bugfix/, hotfix/, release/
+
+# Project-specific patterns
+d2c_connect_component_pattern = export default function ComponentName
+d2c_connect_page_pattern = export default function PageName 
