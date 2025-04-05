@@ -1,0 +1,8 @@
+node_modules/
+.wrangler/
+.open_next/
+.next/
+.gitignore
+.cursorignore
+.idea/
+.code/
